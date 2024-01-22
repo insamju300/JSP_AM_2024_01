@@ -38,14 +38,18 @@ public class ArticleListServlet extends HttpServlet {
 			
 
 			DBUtil dbUtil = new DBUtil(request, response);
-//
+
 			String sql = "SELECT * FROM article;";
 
 			List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
 			
-			response.getWriter().append("연결 성공!");
+			//response.getWriter().append("연결 성공!");
+			
 
-			response.getWriter().append(articleRows.toString());
+			//response.getWriter().append(articleRows.toString());
+			request.setAttribute("articleRows", articleRows);
+			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
+			
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
