@@ -27,10 +27,11 @@ if (request.getParameter("color") != null && request.getParameter("color").trim(
 
 
 String query = request.getQueryString();
-String urlRemoveColor = "./printDan?" + "?" + query;
+String urlRemoveColor = "./printDan?" + query;
 if(urlRemoveColor.contains("color")){
 	urlRemoveColor=urlRemoveColor.substring(0, urlRemoveColor.indexOf("color"));
 }
+
 %>
 <style>
 .body, ul, li {
@@ -124,6 +125,9 @@ main li {
 }
 
 aside {
+     position: fixed; 
+     z-index: 1; 
+     top:200px;
 	width: 150px;
 	height: 500px;
 	box-shadow: 1px 1px 3px gray;
@@ -132,6 +136,7 @@ aside {
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
+	
 }
 
 aside>a {
@@ -143,6 +148,8 @@ aside>a {
 
 aside>a:hover {
 	cursor: pointer;
+	
+
 }
 
 aside>a:first-child {
@@ -276,7 +283,10 @@ aside>a:nth-child(4) {
 		</ul>
 	</main>
 	<aside>
-		<a href=""></a> <a href=""></a> <a href=""></a> <a href=""></a>
+		<a href=<%=urlRemoveColor+"color=black" %>></a> 
+		<a href=<%=urlRemoveColor+"color=gray" %>></a> 
+		<a href=<%=urlRemoveColor+"color=blue" %>></a> 
+		<a href=<%=urlRemoveColor+"color=red" %>></a>
 	</aside>
 
 </body>
