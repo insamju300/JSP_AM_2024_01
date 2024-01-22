@@ -25,7 +25,12 @@ if (request.getParameter("color") != null && request.getParameter("color").trim(
 	color = request.getParameter("color");
 }
 
-String url = request.getRequestURL().toString();
+
+String query = request.getQueryString();
+String urlRemoveColor = "./printDan?" + "?" + query;
+if(urlRemoveColor.contains("color")){
+	urlRemoveColor=urlRemoveColor.substring(0, urlRemoveColor.indexOf("color"));
+}
 %>
 <style>
 .body, ul, li {
@@ -71,7 +76,6 @@ a {
 .topbar>nav>ul>li {
 	width: 15%;
 	position: relative;
-	
 }
 
 .topbar>nav>ul a {
@@ -90,11 +94,10 @@ a {
 .topbar>nav>ul ul {
 	display: none;
 }
-.topbar>nav>ul ul>li{
+
+.topbar>nav>ul ul>li {
 	background-color: gray;
 }
-
-
 
 .topbar>nav ul>li:hover>ul {
 	display: block;
@@ -118,6 +121,44 @@ main li {
 	text-align: center;
 	text-shadow: 1px 1px 3px gray;
 	color: <%=color%>;
+}
+
+aside {
+	width: 150px;
+	height: 500px;
+	box-shadow: 1px 1px 3px gray;
+	margin-left: 200px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+
+aside>a {
+	display: block;
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+}
+
+aside>a:hover {
+	cursor: pointer;
+}
+
+aside>a:first-child {
+	background-color: black;
+}
+
+aside>a:nth-child(2) {
+	background-color: gray;
+}
+
+aside>a:nth-child(3) {
+	background-color: blue;
+}
+
+aside>a:nth-child(4) {
+	background-color: red;
 }
 </style>
 
@@ -234,5 +275,9 @@ main li {
 			%>
 		</ul>
 	</main>
+	<aside>
+		<a href=""></a> <a href=""></a> <a href=""></a> <a href=""></a>
+	</aside>
+
 </body>
 </html>

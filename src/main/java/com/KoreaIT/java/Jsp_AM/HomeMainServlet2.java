@@ -17,5 +17,7 @@ public class HomeMainServlet2 extends HttpServlet {
 		// TODO Auto-generated method stub
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/home/printDan.jsp");
 		dispatcher.forward(request, response);
+		
+		
 	}
 }
