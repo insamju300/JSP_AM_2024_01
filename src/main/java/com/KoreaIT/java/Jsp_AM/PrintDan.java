@@ -22,6 +22,7 @@ public class PrintDan extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		int dan = 2;
 		int limit = 9;
+		String color = "black";
 				
 		try {
 			dan = Integer.parseInt(request.getParameter("dan").trim());
@@ -34,6 +35,9 @@ public class PrintDan extends HttpServlet {
 			
 		}
 		
+		if(request.getParameter("color")!=null && request.getParameter("color").trim().length()>0) {
+			color = request.getParameter("color");
+		}
 	    
 		
 		String html1="<!DOCTYPE html>\r\n"
@@ -122,11 +126,12 @@ public class PrintDan extends HttpServlet {
 				+ "\r\n"
 				+ "    main h3 {\r\n"
 				+ "      text-shadow: 1px 1px 3px gray;\r\n"
+				+ "      color: "+color+";\r\n"
 				+ "    }\r\n"
 				+ "\r\n"
 				+ "    main li {\r\n"
 				+ "      text-align: center;\r\n"
-				+ "      color: #8C0001;\r\n"
+				+ "      color: "+color+";\r\n"
 				+ "      text-shadow: 1px 1px 3px gray;\r\n"
 				+ "    }\r\n"
 				+ "  </style>\r\n"

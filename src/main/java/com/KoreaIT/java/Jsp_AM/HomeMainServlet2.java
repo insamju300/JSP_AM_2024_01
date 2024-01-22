@@ -1,5 +1,6 @@
 package com.KoreaIT.java.Jsp_AM;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,10 +11,11 @@ import java.io.IOException;
 /**
  * Servlet implementation class HomeMainServlet
  */
-@WebServlet("/home/main2")
+@WebServlet("/home/printDan")
 public class HomeMainServlet2 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("The World!!!!!!!!!!!!!!!!!!!!!!!!!").append(request.getContextPath());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/home/printDan.jsp");
+		dispatcher.forward(request, response);
 	}
 }
