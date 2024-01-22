@@ -7,7 +7,23 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.KoreaIT.java.Jsp_AM.SQLErrorException;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +33,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class DBUtil {
-	HttpServletRequest request;
-	HttpServletResponse response;
-	
+	HttpServletRequest req;
+	HttpServletResponse resp;
+
 	public DBUtil(HttpServletRequest request, HttpServletResponse response) {
-		this.request = request;
-		this.response = response;
+		this.req = request;
+		this.resp = response;
 	}
 
 	public static Map<String, Object> selectRow(Connection dbConn, String sql) {
@@ -58,9 +74,8 @@ public class DBUtil {
 						int numValue = (int) (long) value;
 						row.put(columnName, numValue);
 					} else if (value instanceof Timestamp) {
-						LocalDateTime dateValue =((Timestamp) value).toLocalDateTime();
-						//String dateValue = value.toString();
-						//dateValue = dateValue.substring(0, dateValue.length() - 2);
+						String dateValue = value.toString();
+						dateValue = dateValue.substring(0, dateValue.length() - 2);
 						row.put(columnName, dateValue);
 					} else {
 						row.put(columnName, value);
