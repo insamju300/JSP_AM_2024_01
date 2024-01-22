@@ -11,6 +11,12 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 <head>
 <meta charset="UTF-8"">
 <title>게시물 목록</title>
+<%
+  String errMsg = (String)request.getAttribute("errMsg");
+  String msg = (String)request.getAttribute("msg");
+%>
+
+
 </head>
 <body>
 
@@ -20,8 +26,15 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 	<a href="/JSP_AM_2024_01/article/list" target="_blank">버튼</a>
 	<a href="detail" target="_blank">디테일</a>
 
-	<h2>게시물 목록</h2>
 
+    <% if(errMsg!=null && errMsg.length()>0){%>
+	<h1><%=errMsg %></h1>
+	<%} %>
+	<% if(msg!=null && msg.length()>0){%>
+	<h1><%=msg %></h1>
+	<%} %>
+	<h2>게시물 목록</h2>
+	
 	<ul>
 		<%
 		for (Map<String, Object> articleRow : articleRows) {
@@ -31,6 +44,7 @@ List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getA
 		}
 		%>
 	</ul>
+	
 
 
 
