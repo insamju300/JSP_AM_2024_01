@@ -24,6 +24,11 @@ SET regDate = NOW(),
 title = '제목3',
 `body` = '내용3';
 
+INSERT INTO article
+SET regDate = NOW(),
+title = '제목4',
+`body` = '내용4';
+
 SELECT *
 FROM article
 ORDER BY id DESC;

@@ -16,12 +16,12 @@
 <tr>
 <th>번호</th><th>생성일</th><th>타이틀</th><th>내용</th>
 </tr>
-<%for(int i = 0; i<articleRows.size();i++){ %>
+<%for(Map<String, Object> articleRow : articleRows){ %>
 <tr>
-	<td><%=articleRows.get(i).get("id")%>번</td>
-	<td><%=articleRows.get(i).get("regDate")%></td>
-	<td><%=articleRows.get(i).get("title")%></td> 
-	<td><%=articleRows.get(i).get("body")%></td>
+	<td><%=articleRow.get("id")%>번</td>
+	<td><%=articleRow.get("regDate")%></td>
+	<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>  
+	<td><%=articleRow.get("body")%></td>
 <tr>
 <%} %>
 </table>
