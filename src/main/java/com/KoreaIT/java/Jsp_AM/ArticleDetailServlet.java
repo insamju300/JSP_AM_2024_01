@@ -1,10 +1,5 @@
 package com.KoreaIT.java.Jsp_AM;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,29 +7,19 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Servlet implementation class ArticleDetailServlet
- */
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 @WebServlet("/article/detail")
 public class ArticleDetailServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		int id = -1;
-		try {
-			id = Integer.parseInt(request.getParameter("id").trim());
-		}catch(NumberFormatException e) {
-			request.setAttribute("errorMsg", "검색할 아이디는 숫자로 입력해 주세요.");
-			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
-			return;
-		}catch(NullPointerException e) {
-			request.setAttribute("errorMsg", "검색할 아이디를 입력해주세요.");
-			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
-			return;
-		}
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		// DB연결
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -50,21 +35,19 @@ public class ArticleDetailServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, "root", "");
-			
+			response.getWriter().append("연결 성공!");
 
 			DBUtil dbUtil = new DBUtil(request, response);
 
-			String sql = String.format("SELECT * FROM article where id = %d;", id);
+			int id = Integer.parseInt(request.getParameter("id"));
 
-			Map<String, Object> article = dbUtil.selectRow(conn, sql);
-			
-			//response.getWriter().append("연결 성공!");
-			
+//			String sql = "SELECT * FROM article WHERE id = " + id + ";";
+			String sql = String.format("SELECT * FROM article WHERE id = %d;", id);
 
-			//response.getWriter().append(articleRows.toString());
-			request.setAttribute("article", article);
+			Map<String, Object> articleRow = dbUtil.selectRow(conn, sql);
+
+			request.setAttribute("articleRow", articleRow);
 			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
-			
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
@@ -77,7 +60,6 @@ public class ArticleDetailServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-	
-		
 	}
+
 }

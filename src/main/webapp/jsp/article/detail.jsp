@@ -1,41 +1,34 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
+<%
+Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>게시글 목록</title>
-<% String errorMsg =  (String)request.getAttribute("errorMsg");
-   Map<String, Object> article= (Map<String, Object>)request.getAttribute("article");
-%>
+<meta charset="UTF-8"">
+<title>게시물 상세페이지</title>
 </head>
 <body>
-<h2>게시글 상세보기</h2>
-<% if (errorMsg!=null && errorMsg.length()>0){ %>
-<h3><%=errorMsg %></h3>
-<%}else if(article==null || article.size()==0){ %>
-<h3>해당 id의 게시글이 존재하지 않습니다.</h3>
-<%}else{ %>
-<table>
-<tr>
-<th>번호</th><th>생성일</th><th>타이틀</th><th>내용</th>
-</tr>
-<tr>
-	<td><%=article.get("id")%>번</td>
-	<td><%=article.get("regDate")%></td>
-	<td><%=article.get("title")%></td> 
-	<td><%=article.get("body")%></td>
-	
-<tr>
-</table>
-<%} %>
 
-<a href="list">리스트로 돌아가기</a>
+	<h2>게시물 상세페이지</h2>
 
+	<div>
+		번호 :
+		<%=articleRow.get("id")%></div>
+	<div>
+		날짜 :
+		<%=articleRow.get("regDate")%></div>
+	<div>
+		제목 :
+		<%=articleRow.get("title")%></div>
+	<div>
+		내용 :
+		<%=articleRow.get("body")%></div>
 
+	<div><a style="color:green" href="list">리스트로 돌아가기</a></div>
 
 </body>
 </html>
