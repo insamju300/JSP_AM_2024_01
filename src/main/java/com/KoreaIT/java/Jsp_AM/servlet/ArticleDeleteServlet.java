@@ -52,12 +52,12 @@ public class ArticleDeleteServlet extends HttpServlet {
 				return;
 		    }
 
-//			String sql = "SELECT * FROM article WHERE id = " + id + ";";
-			String sql = String.format("SELECT * FROM article WHERE id = %d;", id);
+			SecSql sql = SecSql.from("SELECT * FROM Article");
+			sql.append("WHERE id = ?;", id);
 			
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 			if(articleRow==null || articleRow.size()==0) {
-				errMsg = "해당 회원이 존재하지 않습니다.";
+				errMsg = id+"번 회원이 존재하지 않습니다.";
 		    	request.setAttribute("errMsg", errMsg);
 		    	request.getRequestDispatcher("list").forward(request, response);
 				return;
