@@ -38,17 +38,49 @@ public class ArticleListServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, "root", "");
-			response.getWriter().append("연결 성공!");
+			//response.getWriter().append("연결 성공!");
 
-			SecSql sql = SecSql.from("SELECT * FROM Article;");
+			SecSql sql = SecSql.from("SELECT * FROM Article");
+
+			int page = 1;
+			int maxContent=10;
+			int limitPage = 10;
+			
+			try {
+			if (request.getParameter("page") != null && request.getParameter("page").toString().length() > 0) {
+				page = Integer.parseInt(request.getParameter("page").toString());
+			}
+			}catch(Exception e) {
+				response.getWriter()
+				.append(String.format("페이지는 숫자값만 입력 가능합니다."));
+				return;
+			}
+			
+			sql.append("LIMIT ? ", (page-1)*maxContent);
+			sql.append(", ?", maxContent);
+		
+			
+			System.out.println(sql.toString());
 
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
+			
+			sql = SecSql.from("SELECT COUNT(1) FROM Article");
+			int allArticleCount = DBUtil.selectRowIntValue(conn, sql);
+			int maxPage = allArticleCount/maxContent;
+			maxPage+=(allArticleCount%maxContent==0)?0:1;
 
 //			response.getWriter().append(articleRows.toString());
-			request.setAttribute("articleRows", articleRows);
-			System.out.println(request.getAttribute("msg"));
-			System.out.println(request.getAttribute("errMsg"));
 			
+			int startPage=(page)-(page%limitPage);
+			if(startPage<=0) startPage=1;
+			int endPage = startPage+(limitPage-1);
+			if(endPage>maxPage) {
+				endPage=maxPage;
+			}
+			request.setAttribute("currentPage", page);
+			request.setAttribute("startPage", startPage);
+			request.setAttribute("endPage", endPage);
+			request.setAttribute("articleRows", articleRows);
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
 		} catch (SQLException e) {

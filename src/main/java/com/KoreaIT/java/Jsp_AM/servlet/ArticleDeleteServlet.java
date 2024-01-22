@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/delete")
+@WebServlet("/article/doDelete")
 public class ArticleDeleteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,42 +32,23 @@ public class ArticleDeleteServlet extends HttpServlet {
 		String url = "jdbc:mysql://127.0.0.1:3306/JSP_AM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
 		String user = "root";
 		String password = "";
-		String errMsg = null;
 
 		Connection conn = null;
 
 		try {
-			conn = DriverManager.getConnection(url, "root", "");
+			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
 
+			int id = Integer.parseInt(request.getParameter("id"));
 
-
-			int id = -1; 
-		    try {
-				id=	Integer.parseInt(request.getParameter("id"));
-		    }catch(Exception e) {
-		    	errMsg = "삭제할 id는 숫자로만 입력 가능합니다.";
-		    	request.setAttribute("errMsg", errMsg);
-		    	request.getRequestDispatcher("list").forward(request, response);
-				return;
-		    }
-
-			SecSql sql = SecSql.from("SELECT * FROM Article");
+			SecSql sql = SecSql.from("DELETE");
+			sql.append("FROM article");
 			sql.append("WHERE id = ?;", id);
-			
-			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
-			if(articleRow==null || articleRow.size()==0) {
-				errMsg = id+"번 회원이 존재하지 않습니다.";
-		    	request.setAttribute("errMsg", errMsg);
-		    	request.getRequestDispatcher("list").forward(request, response);
-				return;
-			}
-			SecSql secSql = new SecSql();
-			secSql.append("DELETE FROM article WHERE id = ?;", id);
-			DBUtil.delete(conn, secSql);
 
-			request.setAttribute("msg", id+"번 게시글이 삭제되었습니다.");
-			request.getRequestDispatcher("list").forward(request, response);
+			DBUtil.delete(conn, sql);
+
+			response.getWriter()
+					.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list');</script>", id));
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);

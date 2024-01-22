@@ -14,7 +14,7 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 <body>
 
 	<h2>게시물 상세페이지</h2>
-	<a href="delete?id=<%=articleRow.get("id")%>">삭제</a>
+	
 
 	<div>
 		번호 :

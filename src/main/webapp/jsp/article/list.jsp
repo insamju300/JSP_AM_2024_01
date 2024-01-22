@@ -5,47 +5,53 @@
 
 <%
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+int startPage= (int)request.getAttribute("startPage");
+int endPage= (int)request.getAttribute("endPage");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8"">
 <title>게시물 목록</title>
-<%
-  String errMsg = (String)request.getAttribute("errMsg");
-  String msg = (String)request.getAttribute("msg");
-%>
-
-
 </head>
 <body>
 
-	<a href="https://www.naver.com" target="_blank">네이버</a>
-	<a href="http://localhost:8081/JSP_AM_2024_01/article/list"
-		target="_blank">버튼</a>
-	<a href="/JSP_AM_2024_01/article/list" target="_blank">버튼</a>
-	<a href="detail" target="_blank">디테일</a>
+	<a href="../home/main">메인으로 이동</a>
 
-
-    <% if(errMsg!=null && errMsg.length()>0){%>
-	<h1><%=errMsg %></h1>
-	<%} %>
-	<% if(msg!=null && msg.length()>0){%>
-	<h1><%=msg %></h1>
-	<%} %>
 	<h2>게시물 목록</h2>
-	
-	<ul>
-		<%
-		for (Map<String, Object> articleRow : articleRows) {
-		%>
-		<li><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("id")%>번, <%=articleRow.get("regDate")%>,<%=articleRow.get("title")%>,<%=articleRow.get("body")%></a></li>
-		<%
-		}
-		%>
-	</ul>
-	
 
+	<table style="border-collapse: collapse; border-color: green"
+		;  border="1px">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>작성날짜</th>
+				<th>제목</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+			for (Map<String, Object> articleRow : articleRows) {
+			%>
+			<tr style="text-align: center;">
+				<td><%=articleRow.get("id")%></td>
+				<td><%=articleRow.get("regDate")%></td>
+				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
+				<td><a href="doDelete?id=<%=articleRow.get("id")%>">del</a></td>
+			</tr>
+			<%
+			}
+			%>
+		</tbody>
+		
+	</table>
+
+<a href="list?page=<%=startPage-1%>">◀</a>
+<%for(int i = startPage; i<=endPage; i++) {%>
+    <a href="list?page=<%=i%>"><%=i %></a>
+<%} %>
+    <a href="list?page=<%=endPage+1%>">▶</a>
 
 
 </body>
