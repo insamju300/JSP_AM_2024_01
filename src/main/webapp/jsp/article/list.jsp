@@ -7,6 +7,8 @@
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
 int startPage= (int)request.getAttribute("startPage");
 int endPage= (int)request.getAttribute("endPage");
+int maxPage= (int)request.getAttribute("maxPage");
+int currentPage = (int)request.getAttribute("currentPage");
 %>
 <!DOCTYPE html>
 <html>
@@ -46,12 +48,19 @@ int endPage= (int)request.getAttribute("endPage");
 		</tbody>
 		
 	</table>
-
+<% if(startPage!=1){ %>
 <a href="list?page=<%=startPage-1%>">◀</a>
+<% } %>
 <%for(int i = startPage; i<=endPage; i++) {%>
+    <% if(i!=currentPage){ %>
     <a href="list?page=<%=i%>"><%=i %></a>
+    <%} else{%>
+    <%=i %>
+    <%} %>
 <%} %>
+<% if(endPage!=maxPage){ %>
     <a href="list?page=<%=endPage+1%>">▶</a>
+<%} %>
 
 
 </body>

@@ -43,8 +43,9 @@ public class ArticleListServlet extends HttpServlet {
 			SecSql sql = SecSql.from("SELECT * FROM Article");
 
 			int page = 1;
-			int maxContent=10;
+			int limitItem=10;
 			int limitPage = 10;
+		
 			
 			try {
 			if (request.getParameter("page") != null && request.getParameter("page").toString().length() > 0) {
@@ -56,8 +57,8 @@ public class ArticleListServlet extends HttpServlet {
 				return;
 			}
 			
-			sql.append("LIMIT ? ", (page-1)*maxContent);
-			sql.append(", ?", maxContent);
+			sql.append("LIMIT ? ", (page-1)*limitItem);
+			sql.append(", ?", limitItem);
 		
 			
 			System.out.println(sql.toString());
@@ -65,13 +66,17 @@ public class ArticleListServlet extends HttpServlet {
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
 			
 			sql = SecSql.from("SELECT COUNT(1) FROM Article");
+			
 			int allArticleCount = DBUtil.selectRowIntValue(conn, sql);
-			int maxPage = allArticleCount/maxContent;
-			maxPage+=(allArticleCount%maxContent==0)?0:1;
+			int maxPage = allArticleCount/limitItem;
+			maxPage+=(allArticleCount%limitItem==0)?0:1;
+			
+			int currentBlock = page/limitPage;
+			currentBlock += page%limitPage==0? 0:1;
 
 //			response.getWriter().append(articleRows.toString());
 			
-			int startPage=(page)-(page%limitPage);
+			int startPage=((currentBlock-1)*limitPage)+1;
 			if(startPage<=0) startPage=1;
 			int endPage = startPage+(limitPage-1);
 			if(endPage>maxPage) {
@@ -80,6 +85,7 @@ public class ArticleListServlet extends HttpServlet {
 			request.setAttribute("currentPage", page);
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
+			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("articleRows", articleRows);
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
