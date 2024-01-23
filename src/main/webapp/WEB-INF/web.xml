@@ -39,4 +39,14 @@
     <servlet-name>ArticleDetailServlet</servlet-name>
     <url-pattern>/ArticleDetailServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ArticleInsertServlet</display-name>
+    <servlet-name>ArticleInsertServlet</servlet-name>
+    <servlet-class>com.KoreaIT.java.Jsp_AM.servlet.ArticleInsertServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleInsertServlet</servlet-name>
+    <url-pattern>/ArticleInsertServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

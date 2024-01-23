@@ -18,7 +18,8 @@ int currentPage = (int)request.getAttribute("currentPage");
 </head>
 <body>
 
-	<a href="../home/main">메인으로 이동</a>
+	<a href="../home/main">메인으로 이동</a><br>
+	<a href="doWrite">새글 쓰기</a>
 
 	<h2>게시물 목록</h2>
 

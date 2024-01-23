@@ -38,7 +38,6 @@ public class ArticleListServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, "root", "");
-			//response.getWriter().append("연결 성공!");
 
 			SecSql sql = SecSql.from("SELECT * FROM Article");
 
@@ -52,16 +51,17 @@ public class ArticleListServlet extends HttpServlet {
 				page = Integer.parseInt(request.getParameter("page").toString());
 			}
 			}catch(Exception e) {
-				response.getWriter()
-				.append(String.format("페이지는 숫자값만 입력 가능합니다."));
+				response.getWriter();
+				sql.append(String.format("페이지는 숫자값만 입력 가능합니다."));
 				return;
 			}
 			
+			sql.append("ORDER BY ID DESC");
 			sql.append("LIMIT ? ", (page-1)*limitItem);
 			sql.append(", ?", limitItem);
 		
 			
-			System.out.println(sql.toString());
+//			System.out.println(sql.toString());
 
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
 			
@@ -70,7 +70,7 @@ public class ArticleListServlet extends HttpServlet {
 			int allArticleCount = DBUtil.selectRowIntValue(conn, sql);
 			int maxPage = allArticleCount/limitItem;
 			maxPage+=(allArticleCount%limitItem==0)?0:1;
-			
+
 			int currentBlock = page/limitPage;
 			currentBlock += page%limitPage==0? 0:1;
 
