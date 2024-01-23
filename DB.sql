@@ -9,6 +9,15 @@ CREATE TABLE article(
     `body` TEXT NOT NULL
 );
 
+
+CREATE TABLE `member`(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    loginId CHAR(100) NOT NULL UNIQUE,
+    `password` CHAR(200) NOT NULL,
+    `name` CHAR(100) NOT NULL
+);
+
 INSERT INTO article
 SET regDate = NOW(),
 title = '제목1',
@@ -32,3 +41,5 @@ title = '제목4',
 SELECT *
 FROM article
 ORDER BY id DESC;
+
+select SHA2('password',256);
