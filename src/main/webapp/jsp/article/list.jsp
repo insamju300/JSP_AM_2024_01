@@ -5,10 +5,8 @@
 
 <%
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
-int startPage= (int)request.getAttribute("startPage");
-int endPage= (int)request.getAttribute("endPage");
-int maxPage= (int)request.getAttribute("maxPage");
-int currentPage = (int)request.getAttribute("currentPage");
+int cPage = (int) request.getAttribute("page");
+int totalPage = (int) request.getAttribute("totalPage");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,19 +15,23 @@ int currentPage = (int)request.getAttribute("currentPage");
 <title>게시물 목록</title>
 </head>
 <body>
-
-	<a href="../home/main">메인으로 이동</a><br>
-	<a href="doWrite">새글 쓰기</a>
+	<div>
+		<a href="../home/main">메인으로 이동</a>
+	</div>
+	<div>
+		<a href="write">글쓰기</a>
+	</div>
 
 	<h2>게시물 목록</h2>
 
 	<table style="border-collapse: collapse; border-color: green"
-		;  border="1px">
+		border="1px">
 		<thead>
 			<tr>
 				<th>번호</th>
 				<th>작성날짜</th>
 				<th>제목</th>
+				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
@@ -41,27 +43,42 @@ int currentPage = (int)request.getAttribute("currentPage");
 				<td><%=articleRow.get("id")%></td>
 				<td><%=articleRow.get("regDate")%></td>
 				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
+				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>
 				<td><a href="doDelete?id=<%=articleRow.get("id")%>">del</a></td>
 			</tr>
 			<%
 			}
 			%>
 		</tbody>
-		
 	</table>
-<% if(startPage!=1){ %>
-<a href="list?page=<%=startPage-1%>">◀</a>
-<% } %>
-<%for(int i = startPage; i<=endPage; i++) {%>
-    <% if(i!=currentPage){ %>
-    <a href="list?page=<%=i%>"><%=i %></a>
-    <%} else{%>
-    <%=i %>
-    <%} %>
-<%} %>
-<% if(endPage!=maxPage){ %>
-    <a href="list?page=<%=endPage+1%>">▶</a>
-<%} %>
+
+	<style type="text/css">
+.page {
+	font-size: 1.4rem;
+}
+
+.page>a {
+	color: black;
+	text-decoration: none;
+}
+
+.page>a.cPage {
+	color: red;
+	text-decoration: underline;
+}
+</style>
+
+	<div class="page">
+		<%
+		for (int i = 1; i <= totalPage; i++) {
+		%>
+		<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
+		<%
+		}
+		%>
+	</div>
+
+
 
 
 </body>

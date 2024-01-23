@@ -1,54 +1,31 @@
+<%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-main {
-  text-align: center;
-}
-
-main > form {
-  display: flex;
-  flex-direction: column;
-}
-
-main > form > input:focus {
-  box-shadow: 1px 1px 5px gray;
-}
-main > form > textarea:focus {
-  box-shadow: 1px 1px 5px gray;
-}
-
-main > form > .button_block {
-  display: flex;
-  justify-content: space-around;
-}
-
-main > form > .button_block > input {
-  width: 40%;
-}
-
-main > form > * {
-  margin-top: 10px;
-}
-
-</style>
+<title>게시물 작성 페이지</title>
 </head>
 <body>
-<main>
-  <h1>게시글 등록</h1>
-  <form action="doWrite" method="post">
-    <input type="text" name="title" placeholder="제목">
-    <textarea name="body" rows="30" cols="33" placeholder="내용"></textarea>
-    <div class="button_block">
-      <input type="submit" value="등록">
-      <input type="reset" value="초기화">
-    </div>
-  </form>
-</main>
-<div><a style="color:green" href="list">리스트로 돌아가기</a></div>
+
+	<h2>게시물 작성</h2>
+
+	<form method="POST" action="doWrite">
+		<div>
+			제목 : <input type="text" placeholder="제목을 입력해주세요" name="title" />
+		</div>
+		<div>
+			내용 :
+			<textarea type="text" placeholder="내용을 입력해주세요" name="body"></textarea>
+		</div>
+		<button type="submit">작성</button>
+	</form>
+
+
+	<div>
+		<a style="color: green" href="list">리스트로 돌아가기</a>
+	</div>
+
 </body>
 </html>

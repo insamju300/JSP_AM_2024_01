@@ -36,15 +36,13 @@ public class ArticleDetailServlet extends HttpServlet {
 		Connection conn = null;
 
 		try {
-			conn = DriverManager.getConnection(url, "root", "");
+			conn = DriverManager.getConnection(url, user, password);
 			response.getWriter().append("연결 성공!");
-
-
 
 			int id = Integer.parseInt(request.getParameter("id"));
 
-//			String sql = "SELECT * FROM article WHERE id = " + id + ";";
-			SecSql sql = SecSql.from("SELECT * FROM Article");
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
 			sql.append("WHERE id = ?;", id);
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
@@ -65,4 +63,8 @@ public class ArticleDetailServlet extends HttpServlet {
 		}
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 }
