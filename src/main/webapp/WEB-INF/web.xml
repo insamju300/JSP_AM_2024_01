@@ -59,4 +59,14 @@
     <servlet-name>MemberJoinServlet</servlet-name>
     <url-pattern>/MemberJoinServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>IdCheckServlet</display-name>
+    <servlet-name>IdCheckServlet</servlet-name>
+    <servlet-class>com.KoreaIT.java.Jsp_AM.servlet.IdCheckServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IdCheckServlet</servlet-name>
+    <url-pattern>/IdCheckServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
