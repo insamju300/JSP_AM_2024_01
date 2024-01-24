@@ -14,33 +14,69 @@ form {
 	flex-direction: column;
 }
 
+#passDupleLabel{
+    display: none;
+}
+
 #passDuple {
     display : none;
 }
+
 </style>
 </head>
 <body>
 	<h1>회원가입</h1>
-	<form action="#">
-		<label for="loginId">id</label> <input type="text" name="loginId"
-			id="loginId" /> <label for="password">password</label> <input
+	<form action="join" method="post" id="joinForm">
+		<label for="loginId" id="loginIdLabel">id</label> <input type="text" name="loginId"
+			id="loginId" /> 
+			
+	    <label for="password" id="passwordLabel">password</label> <input
 			type="password" name="password" id="password" /> 
 			<label
-			for="passDuple">password 확인</label> <input type="password"
-			name="passDuple" id="passDuple" /> <label for="name">이름</label>
+			for="passDuple" id="passDupleLabel">password 확인</label> <input type="password"
+			name="passDuple" id="passDuple" /> 
+			<label for="name" id="nameLabel">이름</label>
 		<input type="text" name="name" id="name" />
-		<button type="button" id="submit">회원가입</button>
+		<button type="button" id="submitButton">회원가입</button>
 	</form>
 
 	<script type="text/javascript">
 		let idCheck = false;
 		let passwordCheck = false;
 		let passDupleCheck = false;
-		$("#submit").click(function() {
+		$("#submitButton").click(function() {
+			let isOk = true;
 			if (!$("#loginId").val()) {
-				alert("id를 입력해주세요.");
+				$("#loginIdLabel").text("id id를 입력해 주세요.");
+				isOk = false;
 			}else if (!idCheck){
-				alert("id체크를 통과해주세요");
+				isOk = false;
+			}
+			
+			if (!$("#password").val()) {
+				$("#passwordLabel").text("password password를 입력해주세요.");
+				isOk = false;
+			}else if (!passwordCheck){
+				isOk = false;
+			}
+			
+			if (!$("#passDuple").val()) {
+				$("#passDupleLabel").text("password확인 password확인을 입력해주세요.");
+				isOk = false;
+			}else if (!passDuple){
+				isOk = false;
+			}
+			
+			if (!$("#name").val()){
+				$("#nameLabel").text("이름 이름을 입력해주세요.");
+				isOk = false;
+			}else{
+				$("#nameLabel").text("이름");
+			}
+			
+			
+			if(isOk){
+				$("#joinForm").submit();
 			}
 		});
 		
@@ -50,6 +86,7 @@ form {
 			
 			if(!idValCheck){
 				idCheck = false;
+				$("#loginIdLabel").text("id 5~20자의 영문 소문자, 숫자, -_를 사용해 주세요.");
 				return;
 			}
 
@@ -59,42 +96,44 @@ form {
 				  method : "post",
 				  success: function(result){
 				    if(result=="true"){
-				    	alert("이미 존재하는 loginId입니다.");
+						$("#loginIdLabel").text("id 이미 존재하는 loginId입니다.");
 				    	idCheck = false;
 				    }else{
-				    	alert("사용 가능한 id입니다.");
+						$("#loginIdLabel").text("id");
 				    	idCheck = true;
 				    }
-				  };
+				  }
 			});
 		});
 		
 		$("#password").blur(function(){
 			let password = $("#password").val();
-			let passValCheck = new RegExp("^[a-zA-Z0-9!@#%^&]{8,16}$").test(loginId);
+			let passValCheck = new RegExp("^[a-zA-Z0-9!@#%^&]{8,16}$").test(password);
 			
 			if(!passValCheck){
-				alert("비밀번호:비밀번호: 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
-				$("#password").val('')
+				$("#passwordLabel").text("password 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
 				passwordCheck = false;
 				return;
 			}
 			passwordCheck = true;
-			$("#passwordCheck").show();
+			$("#passwordLabel").text("password");
+			$("#passDupleLabel").show();
+			$("#passDuple").show();
 			
-		})
+		});
 		
 		$("#passDuple").blur(function(){
 			let password = $("#password").val();
 			let passDuple = $("#passDuple").val();
 			
 			if(password!==passDuple){
-				alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+				$("#passDupleLabel").text("password 확인 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
 				passDupleCheck = false;
 				return;
 			}
+			$("#passDupleLabel").text("password 확인");
 			passDupleCheck = true;
-		})		
+		});		
 		
 		
 	</script>

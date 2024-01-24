@@ -45,9 +45,9 @@ public class IdCheckServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(url, user, password);
-			response.getWriter().append("연결 성공!");
+			//response.getWriter().append("연결 성공!");
 
-			int loginId = Integer.parseInt(request.getParameter("loginId"));
+			String loginId = request.getParameter("loginId");
 
 			SecSql sql = SecSql.from("SELECT IF(COUNT(1) > 0, TRUE, FALSE) FROM `MEMBER`");
 			sql.append("WHERE loginId = ?", loginId);

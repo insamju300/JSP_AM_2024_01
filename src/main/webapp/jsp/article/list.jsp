@@ -23,6 +23,9 @@ int endPage = (int) request.getAttribute("endPage");
 	<div>
 		<a href="write">글쓰기</a>
 	</div>
+	<div>
+		<a href="../member/join">회원가입</a>
+	</div>
 
 	<h2>게시물 목록</h2>
 
