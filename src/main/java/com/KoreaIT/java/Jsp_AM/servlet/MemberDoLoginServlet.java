@@ -72,9 +72,8 @@ public class MemberDoLoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(2*60*60);
 			session.setAttribute("loginMember", findMember);
-
+			response.sendRedirect("../home/main");
 			
-			request.getRequestDispatcher("../home/main.jsp").forward(request, response);
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);

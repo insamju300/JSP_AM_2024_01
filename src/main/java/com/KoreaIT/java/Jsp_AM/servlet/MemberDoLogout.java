@@ -29,7 +29,7 @@ public class MemberDoLogout extends HttpServlet {
 		request.getSession().removeAttribute("loginMember");
 		// TODO Auto-generated method stub
 		
-		request.getRequestDispatcher("../home/main.jsp").forward(request, response);
+		response.sendRedirect("../home/main");
 		
 	}
 
