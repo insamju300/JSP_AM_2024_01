@@ -1,141 +1,100 @@
+<%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-form {
-	display: flex;
-	flex-direction: column;
-}
-
-#passDupleLabel{
-    display: none;
-}
-
-#passDuple {
-    display : none;
-}
-
-</style>
+<title>회원 가입 페이지</title>
 </head>
 <body>
-	<h1>회원가입</h1>
-	<form action="join" method="post" id="joinForm">
-		<label for="loginId" id="loginIdLabel">id</label> <input type="text" name="loginId"
-			id="loginId" /> 
-			
-	    <label for="password" id="passwordLabel">password</label> <input
-			type="password" name="password" id="password" /> 
-			<label
-			for="passDuple" id="passDupleLabel">password 확인</label> <input type="password"
-			name="passDuple" id="passDuple" /> 
-			<label for="name" id="nameLabel">이름</label>
-		<input type="text" name="name" id="name" />
-		<button type="button" id="submitButton">회원가입</button>
-	</form>
+	<div>
+		<a href="../home/main">메인으로 돌아가기</a>
+	</div>
+
+	<!-- 	<a href="https://www.naver.com" -->
+	<!-- 		onclick="if(confirm('진짜 이동 할거임????') == false) return false;">naver</a> -->
+
+	<h2>회원가입</h2>
 
 	<script type="text/javascript">
-		let idCheck = false;
-		let passwordCheck = false;
-		let passDupleCheck = false;
-		$("#submitButton").click(function() {
-			let isOk = true;
-			if (!$("#loginId").val()) {
-				$("#loginIdLabel").text("id id를 입력해 주세요.");
-				isOk = false;
-			}else if (!idCheck){
-				isOk = false;
+		var JoinForm__submitDone = false;
+
+		function JoinForm__submit(form) {
+			if (JoinForm__submitDone) {
+				alert('이미 처리중입니다');
+				return;
 			}
-			
-			if (!$("#password").val()) {
-				$("#passwordLabel").text("password password를 입력해주세요.");
-				isOk = false;
-			}else if (!passwordCheck){
-				isOk = false;
+			// 			form.loginId.value = form.loginId.value.trim();
+			var loginId = form.loginId.value.trim();
+			var loginPw = form.loginPw.value.trim();
+			var loginPwConfirm = form.loginPwConfirm.value.trim();
+			var name = form.name.value.trim();
+
+			console.log('form.loginId.value : ' + loginId);
+			console.log('form.loginPw.value : ' + loginPw);
+			console.log('form.loginPwConfirm.value : ' + loginPwConfirm);
+			console.log('form.name.value : ' + name);
+
+			if (loginId.length == 0) {
+				alert('아이디를 입력해주세요');
+				form.loginId.focus();
+				return;
 			}
-			
-			if (!$("#passDuple").val()) {
-				$("#passDupleLabel").text("password확인 password확인을 입력해주세요.");
-				isOk = false;
-			}else if (!passDuple){
-				isOk = false;
+			if (loginPw.length == 0) {
+				alert('비밀번호를 입력해주세요');
+				form.loginPw.focus();
+				return;
 			}
-			
-			if (!$("#name").val()){
-				$("#nameLabel").text("이름 이름을 입력해주세요.");
-				isOk = false;
-			}else{
-				$("#nameLabel").text("이름");
-			}
-			
-			
-			if(isOk){
-				$("#joinForm").submit();
-			}
-		});
-		
-		$("#loginId").blur(function(){
-			let loginId = $("#loginId").val();
-			let idValCheck = new RegExp("^[a-z0-9-_]{5,20}$").test(loginId);
-			
-			if(!idValCheck){
-				idCheck = false;
-				$("#loginIdLabel").text("id 5~20자의 영문 소문자, 숫자, -_를 사용해 주세요.");
+			if (loginPwConfirm.length == 0) {
+				alert('비밀번호 확인을 입력해주세요');
+				form.loginPwConfirm.focus();
 				return;
 			}
 
-			  $.ajax({url: "idDuplicateCheck",
-				  data: {loginId: loginId},
-				  dataType : "text",
-				  method : "post",
-				  success: function(result){
-				    if(result=="true"){
-						$("#loginIdLabel").text("id 이미 존재하는 loginId입니다.");
-				    	idCheck = false;
-				    }else{
-						$("#loginIdLabel").text("id");
-				    	idCheck = true;
-				    }
-				  }
-			});
-		});
-		
-		$("#password").blur(function(){
-			let password = $("#password").val();
-			let passValCheck = new RegExp("^[a-zA-Z0-9!@#%^&]{8,16}$").test(password);
-			
-			if(!passValCheck){
-				$("#passwordLabel").text("password 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
-				passwordCheck = false;
+			if (loginPw != loginPwConfirm) {
+				alert('비밀번호가 일치하지 않습니다.');
+				form.loginPw.focus();
 				return;
 			}
-			passwordCheck = true;
-			$("#passwordLabel").text("password");
-			$("#passDupleLabel").show();
-			$("#passDuple").show();
-			
-		});
-		
-		$("#passDuple").blur(function(){
-			let password = $("#password").val();
-			let passDuple = $("#passDuple").val();
-			
-			if(password!==passDuple){
-				$("#passDupleLabel").text("password 확인 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-				passDupleCheck = false;
+
+			if (name.length == 0) {
+				alert('이름을 입력해주세요');
+				form.name.focus();
 				return;
 			}
-			$("#passDupleLabel").text("password 확인");
-			passDupleCheck = true;
-		});		
-		
-		
+
+			JoinForm__submitDone = true;
+			form.submit();
+
+		}
 	</script>
+
+	<form method="POST" action="doJoin"
+		onsubmit="JoinForm__submit(this); return false;">
+		<div>
+			로그인 아이디 : <input autocomplete="off" type="text"
+				placeholder="아이디를 입력해주세요" name="loginId" />
+		</div>
+		<div>
+			로그인 비밀번호 : <input autocomplete="off" type="text"
+				placeholder="비밀번호를 입력해주세요" name="loginPw" />
+		</div>
+		<div>
+			로그인 비밀번호 확인: <input autocomplete="off" type="text"
+				placeholder="비밀번호 확인을 입력해주세요" name="loginPwConfirm" />
+		</div>
+		<div>
+			이름 : <input autocomplete="off" type="text" placeholder="이름을 입력해주세요"
+				name="name" />
+		</div>
+		<button type="submit">가입</button>
+	</form>
+
+
+	<div>
+		<a style="color: green" href="../article/list">리스트로 돌아가기</a>
+	</div>
+
 </body>
 </html>

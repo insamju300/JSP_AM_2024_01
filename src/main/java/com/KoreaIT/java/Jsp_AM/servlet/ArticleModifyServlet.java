@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 import com.KoreaIT.java.Jsp_AM.config.Config;
+import com.KoreaIT.java.Jsp_AM.exception.SQLErrorException;
 import com.KoreaIT.java.Jsp_AM.util.DBUtil;
 import com.KoreaIT.java.Jsp_AM.util.SecSql;
 
@@ -24,17 +25,16 @@ public class ArticleModifyServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		// DB연결
 		try {
-			Class.forName(Config.getDriverClassName());
+			Class.forName(Config.getDbDriverClassName());
 		} catch (ClassNotFoundException e) {
 			System.out.println("클래스가 없습니다.");
 			e.printStackTrace();
 		}
 
-
 		Connection conn = null;
 
 		try {
-			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPassword());
+			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
 			int id = Integer.parseInt(request.getParameter("id"));
 
@@ -49,6 +49,8 @@ public class ArticleModifyServlet extends HttpServlet {
 
 		} catch (SQLException e) {
 			System.out.println("에러 : " + e);
+		} catch (SQLErrorException e) {
+			e.getOrigin().printStackTrace();
 		} finally {
 			try {
 				if (conn != null && !conn.isClosed()) {

@@ -32,7 +32,7 @@ public class IdCheckServlet extends HttpServlet {
 		response.setContentType("text/plain");
 
 		try {
-			Class.forName(Config.getDriverClassName());
+			Class.forName(Config.getDbDriverClassName());
 		} catch (ClassNotFoundException e) {
 			System.out.println("클래스가 없습니다.");
 			e.printStackTrace();
@@ -41,7 +41,7 @@ public class IdCheckServlet extends HttpServlet {
 		Connection conn = null;
 
 		try {
-			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPassword());
+			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbUrl());
 			//response.getWriter().append("연결 성공!");
 
 			String loginId = request.getParameter("loginId");
