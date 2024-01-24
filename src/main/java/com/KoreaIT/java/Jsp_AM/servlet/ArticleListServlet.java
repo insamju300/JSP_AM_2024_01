@@ -46,7 +46,6 @@ public class ArticleListServlet extends HttpServlet {
 			}
 
 			int itemsInAPage = 10;
-			int pageInBlock = 10;
 			int limitFrom = (page - 1) * itemsInAPage;
 
 			SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
@@ -54,11 +53,6 @@ public class ArticleListServlet extends HttpServlet {
 
 			int totalCnt = DBUtil.selectRowIntValue(conn, sql);
 			int totalPage = (int) Math.ceil(totalCnt / (double) itemsInAPage);
-			int startPage = ((page-1)/pageInBlock)*pageInBlock+1;
-			int endPage = startPage+pageInBlock-1;
-			if(endPage >= totalPage) {
-				endPage = totalPage;
-			}
 
 			sql = SecSql.from("SELECT *");
 			sql.append("FROM article");
@@ -67,12 +61,12 @@ public class ArticleListServlet extends HttpServlet {
 
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
 
-			request.setAttribute("startPage", startPage);
-			request.setAttribute("endPage", endPage);
 			request.setAttribute("page", page);
+			request.setAttribute("totalCnt", totalCnt);
 			request.setAttribute("totalPage", totalPage);
+			request.setAttribute("itemsInAPage", itemsInAPage);
 			request.setAttribute("articleRows", articleRows);
-			
+
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
 		} catch (SQLException e) {
