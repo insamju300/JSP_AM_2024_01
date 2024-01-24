@@ -79,4 +79,44 @@
     <servlet-name>MemberDoJoinServlet</servlet-name>
     <url-pattern>/MemberDoJoinServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MemberLoginServlet</display-name>
+    <servlet-name>MemberLoginServlet</servlet-name>
+    <servlet-class>com.KoreaIT.java.Jsp_AM.servlet.MemberLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberLoginServlet</servlet-name>
+    <url-pattern>/MemberLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DoLoginServlet</display-name>
+    <servlet-name>DoLoginServlet</servlet-name>
+    <servlet-class>com.KoreaIT.java.Jsp_AM.servlet.DoLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DoLoginServlet</servlet-name>
+    <url-pattern>/DoLoginServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>doLogout</display-name>
+    <servlet-name>doLogout</servlet-name>
+    <servlet-class>com.KoreaIT.java.Jsp_AM.servlet.doLogout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>doLogout</servlet-name>
+    <url-pattern>/doLogout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MemberDoLogout</display-name>
+    <servlet-name>MemberDoLogout</servlet-name>
+    <servlet-class>com.KoreaIT.java.Jsp_AM.servlet.MemberDoLogout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberDoLogout</servlet-name>
+    <url-pattern>/MemberDoLogout</url-pattern>
+  </servlet-mapping>
 </web-app>

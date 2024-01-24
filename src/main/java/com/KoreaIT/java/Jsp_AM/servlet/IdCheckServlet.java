@@ -41,7 +41,7 @@ public class IdCheckServlet extends HttpServlet {
 		Connection conn = null;
 
 		try {
-			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbUrl());
+			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 			//response.getWriter().append("연결 성공!");
 
 			String loginId = request.getParameter("loginId");
@@ -50,6 +50,7 @@ public class IdCheckServlet extends HttpServlet {
 			sql.append("WHERE loginId = ?", loginId);
 
 			boolean idCheck = DBUtil.selectRowBooleanValue(conn, sql);
+			System.out.println("idCheck : " + idCheck);
 
 
 			response.getWriter().print(idCheck);

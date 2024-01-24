@@ -11,12 +11,40 @@
 	<div>
 		<a href="../home/main">메인으로 돌아가기</a>
 	</div>
-
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<!-- 	<a href="https://www.naver.com" -->
 	<!-- 		onclick="if(confirm('진짜 이동 할거임????') == false) return false;">naver</a> -->
 
 	<h2>회원가입</h2>
 
+
+
+	<form method="POST" action="doJoin"
+		onsubmit="JoinForm__submit(this); return false;">
+		<div>
+			로그인 아이디 : <input autocomplete="off" type="text"
+				placeholder="아이디를 입력해주세요" name="loginId" />
+		</div>
+		<div>
+			로그인 비밀번호 : <input autocomplete="off" type="text"
+				placeholder="비밀번호를 입력해주세요" name="loginPw" />
+		</div>
+		<div>
+			로그인 비밀번호 확인: <input autocomplete="off" type="text"
+				placeholder="비밀번호 확인을 입력해주세요" name="loginPwConfirm" />
+		</div>
+		<div>
+			이름 : <input autocomplete="off" type="text" placeholder="이름을 입력해주세요"
+				name="name" />
+		</div>
+		<button type="submit">가입</button>
+	</form>
+
+
+	<div>
+		<a style="color: green" href="../article/list">리스트로 돌아가기</a>
+	</div>
 	<script type="text/javascript">
 		var JoinForm__submitDone = false;
 
@@ -41,7 +69,27 @@
 				form.loginId.focus();
 				return;
 			}
-			if (loginPw.length == 0) {
+			var isDupleLoginId = false; 
+			$.ajax({url: "idDuplicateCheck",
+				  data: {loginId: loginId},
+				  dataType : "text",
+				  method : "post",
+				  async: false,
+				  success: function(result){
+				    if(result=="true"){
+				    	isDupleLoginId=true;
+
+				    }else{
+				    }
+				  }
+			});
+			if(isDupleLoginId){
+				alert(loginId+ "는 이미 존재하는 id 입니다.");
+				return;
+			}
+			
+			
+			if(loginPw.length == 0) {
 				alert('비밀번호를 입력해주세요');
 				form.loginPw.focus();
 				return;
@@ -69,32 +117,5 @@
 
 		}
 	</script>
-
-	<form method="POST" action="doJoin"
-		onsubmit="JoinForm__submit(this); return false;">
-		<div>
-			로그인 아이디 : <input autocomplete="off" type="text"
-				placeholder="아이디를 입력해주세요" name="loginId" />
-		</div>
-		<div>
-			로그인 비밀번호 : <input autocomplete="off" type="text"
-				placeholder="비밀번호를 입력해주세요" name="loginPw" />
-		</div>
-		<div>
-			로그인 비밀번호 확인: <input autocomplete="off" type="text"
-				placeholder="비밀번호 확인을 입력해주세요" name="loginPwConfirm" />
-		</div>
-		<div>
-			이름 : <input autocomplete="off" type="text" placeholder="이름을 입력해주세요"
-				name="name" />
-		</div>
-		<button type="submit">가입</button>
-	</form>
-
-
-	<div>
-		<a style="color: green" href="../article/list">리스트로 돌아가기</a>
-	</div>
-
 </body>
 </html>
