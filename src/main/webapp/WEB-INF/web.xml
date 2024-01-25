@@ -119,4 +119,13 @@
     <servlet-name>MemberDoLogout</servlet-name>
     <url-pattern>/MemberDoLogout</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>ArticleFilter</display-name>
+    <filter-name>ArticleFilter</filter-name>
+    <filter-class>com.KoreaIT.java.Jsp_AM.servlet.ArticleFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ArticleFilter</filter-name>
+    <url-pattern>/ArticleFilter</url-pattern>
+  </filter-mapping>
 </web-app>

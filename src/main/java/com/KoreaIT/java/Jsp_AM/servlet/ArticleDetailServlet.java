@@ -35,13 +35,13 @@ public class ArticleDetailServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
-			response.getWriter().append("연결 성공!");
+			//response.getWriter().append("연결 성공!");
 
 			int id = Integer.parseInt(request.getParameter("id"));
 
-			SecSql sql = SecSql.from("SELECT *");
-			sql.append("FROM article");
-			sql.append("WHERE id = ?;", id);
+			SecSql sql = SecSql.from("SELECT article.*, `member`.`name` as writer");
+			sql.append("FROM article INNER JOIN `member` ON article.memberId = `member`.id");
+			sql.append("WHERE article.id = ?;", id);
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 

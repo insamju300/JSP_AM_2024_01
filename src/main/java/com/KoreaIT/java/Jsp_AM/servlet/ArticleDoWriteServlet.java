@@ -37,11 +37,13 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
+			int memberId = ((Member)request.getSession().getAttribute("loginMember")).getId();
 
 			SecSql sql = SecSql.from("INSERT INTO article");
 			sql.append("SET regDate = NOW(),");
 			sql.append("title = ?,", title);
-			sql.append("`body` = ?;", body);
+			sql.append("`body` = ?, ", body);
+			sql.append("`memberId` = ? ", memberId);
 
 			int id = DBUtil.insert(conn, sql);
 
