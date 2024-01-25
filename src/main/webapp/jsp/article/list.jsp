@@ -1,3 +1,4 @@
+<%@ page import="com.KoreaIT.java.Jsp_AM.servlet.Member"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.lang.Math"%>
@@ -10,6 +11,8 @@ int cPage = (int) request.getAttribute("page");
 int totalPage = (int) request.getAttribute("totalPage");
 int totalCnt = (int) request.getAttribute("totalCnt");
 int itemsInAPage = (int) request.getAttribute("itemsInAPage");
+
+Member loginMember = (Member) request.getSession().getAttribute("loginMember");
 %>
 <!DOCTYPE html>
 <html>
@@ -91,8 +94,20 @@ body {
 				<td><%=articleRow.get("regDate")%></td>
 				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
 				<td><%=articleRow.get("writer")%></td>
-				<td><a href="modify?id=<%=articleRow.get("id")%>">수정</a></td>
-				<td><a href="doDelete?id=<%=articleRow.get("id")%>">del</a></td>
+				<td>
+					<%
+					if (loginMember != null && loginMember.getId() == Integer.parseInt(articleRow.get("memberId").toString())) {
+					%>
+					<a href="modify?id=<%=articleRow.get("id")%>">수정</a> <%}%>
+				</td>
+				<td>
+					<%
+					if (loginMember != null && loginMember.getId() == Integer.parseInt(articleRow.get("memberId").toString())) {
+					%>
+					<a href="doDelete?id=<%=articleRow.get("id")%>">del</a> <%}%>
+
+
+				</td>
 			</tr>
 			<%
 			}
