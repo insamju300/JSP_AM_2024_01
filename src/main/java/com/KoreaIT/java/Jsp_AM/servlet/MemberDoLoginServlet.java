@@ -48,6 +48,8 @@ public class MemberDoLoginServlet extends HttpServlet {
 
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
+			
+			
 
 			SecSql sql = SecSql.from("SELECT *");
 			sql.append("FROM `member`");
@@ -72,7 +74,15 @@ public class MemberDoLoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(2*60*60);
 			session.setAttribute("loginMember", findMember);
-			response.sendRedirect("../home/main");
+			String redirectPath = "../home/main";
+			System.out.println(String.format("<script>alert('%s님 환영합니다.');location.href = '%s';</script>", findMember.getName(), redirectPath));
+			if(request.getParameter("redirectPath")!=null && redirectPath.length()>0) {
+				redirectPath = request.getParameter("redirectPath");
+			}
+			
+			System.out.println(String.format("<script>alert('%s님 환영합니다.');location.href = '%s';</script>", findMember.getName(), redirectPath));
+			
+			response.getWriter().write(String.format("<script>alert('%s님 환영합니다.');location.href = '%s';</script>", findMember.getName(), redirectPath));
 			
 
 		} catch (SQLException e) {

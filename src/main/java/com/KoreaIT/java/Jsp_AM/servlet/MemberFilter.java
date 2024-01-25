@@ -15,16 +15,17 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 /**
- * Servlet Filter implementation class ArticleFilter
+ * Servlet Filter implementation class MemberFilter
  */
-@WebFilter("/article/*")
-public class ArticleFilter extends HttpFilter implements Filter {
+@WebFilter("/member/*")
+public class MemberFilter extends HttpFilter implements Filter {
        
     /**
      * @see HttpFilter#HttpFilter()
      */
-    public ArticleFilter() {
+    public MemberFilter() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,34 +46,33 @@ public class ArticleFilter extends HttpFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse)response;
 		httpResponse.setContentType("text/html;charset=utf-8");
 		
-		
 		String[] uri = httpRequest.getRequestURI().split("/");
 
-		List<String> filterList = new ArrayList<>();
+		List<String> needLoginList = new ArrayList<>();
+		List<String> needLogoutList = new ArrayList<>();
 		
-		filterList.add("doDelete");
-		filterList.add("doModify");
-		filterList.add("doWrite");
-		filterList.add("modify");
-		filterList.add("write");
+		needLoginList.add("doLogout");
+		needLogoutList.add("join");
+		needLogoutList.add("doJoin");
+		needLogoutList.add("login");
+		needLogoutList.add("doLogin");
 		
 		System.out.println(uri[uri.length-1]);
 
-		if(filterList.contains(uri[uri.length-1])) {
+		if(needLoginList.contains(uri[uri.length-1])) {
 			Member member = (Member)httpRequest.getSession().getAttribute("loginMember");
 			if(member==null) {
-				String redirectPath = httpRequest.getRequestURI().toString();
-				String queryString = httpRequest.getQueryString();
-				if(queryString!=null && queryString.length()>0) {
-					redirectPath += "?" + queryString;
-				}
-				request.setAttribute("redirectPath", redirectPath);
-				request.setAttribute("alertMsg", "로그인이 필요한 기능입니다.");
-
-//				response.getWriter()
-//				.append(String.format("<script>alert('로그인이 필요한 기능입니다.'); location.replace('../member/login');</script>"));
-				request.getRequestDispatcher("/jsp/member/loginForm.jsp").forward(request, response);
-				
+				response.getWriter()
+				.append(String.format("<script>alert('로그인이 필요한 기능입니다.'); location.replace('login');</script>"));
+				return;	
+			}
+		}
+		
+		if(needLogoutList.contains(uri[uri.length-1])) {
+			Member member = (Member)httpRequest.getSession().getAttribute("loginMember");
+			if(member!=null) {
+				response.getWriter()
+				.append(String.format("<script>alert('로그아웃이 필요한 기능입니다.'); location.replace('doLogout');</script>"));
 				return;	
 			}
 		}

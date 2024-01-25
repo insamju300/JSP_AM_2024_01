@@ -128,4 +128,13 @@
     <filter-name>ArticleFilter</filter-name>
     <url-pattern>/ArticleFilter</url-pattern>
   </filter-mapping>
+  <filter>
+    <display-name>MemberFilter</display-name>
+    <filter-name>MemberFilter</filter-name>
+    <filter-class>com.KoreaIT.java.Jsp_AM.servlet.MemberFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>MemberFilter</filter-name>
+    <url-pattern>/MemberFilter</url-pattern>
+  </filter-mapping>
 </web-app>

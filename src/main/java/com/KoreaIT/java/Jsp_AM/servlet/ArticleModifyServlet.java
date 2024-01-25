@@ -43,6 +43,15 @@ public class ArticleModifyServlet extends HttpServlet {
 			sql.append("WHERE id = ?;", id);
 
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+			
+			
+			if(Integer.parseInt(articleRow.get("memberId").toString())!=loginMember.getId()) {
+				conn.close();
+				response.getWriter()
+				.append("<script>alert('회원님인 이 게시글의 수정 권한이 없습니다.'); location.replace('list');</script>");
+				return;
+			};
 
 			request.setAttribute("articleRow", articleRow);
 			request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);

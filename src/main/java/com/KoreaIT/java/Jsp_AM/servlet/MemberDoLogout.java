@@ -26,10 +26,13 @@ public class MemberDoLogout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		String name = ((Member)request.getSession().getAttribute("loginMember")).getName();
 		request.getSession().removeAttribute("loginMember");
-		// TODO Auto-generated method stub
 		
-		response.sendRedirect("../home/main");
+		response.getWriter().write(String.format("<script>alert('%s님 안녕히가세요');location.href = '../home/main';</script>", name));
+		
 		
 	}
 

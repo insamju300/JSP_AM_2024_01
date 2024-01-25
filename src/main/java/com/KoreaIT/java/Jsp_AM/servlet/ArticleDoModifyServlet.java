@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.KoreaIT.java.Jsp_AM.config.Config;
 import com.KoreaIT.java.Jsp_AM.exception.SQLErrorException;
@@ -36,11 +37,26 @@ public class ArticleDoModifyServlet extends HttpServlet {
 			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
 
 			int id = Integer.parseInt(request.getParameter("id"));
+			
+			//서버쪽 수정 권한 체크
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?;", id);
+
+			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+			
+			if(Integer.parseInt(articleRow.get("memberId").toString())!=loginMember.getId()) {
+				response.getWriter()
+				.append("<script>alert('회원님인 이 게시글의 수정 권한이 없습니다.'); location.href('list');</script>");
+				return;
+			};
+            //서버쪽 수정권한 체크 끝
 
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
 
-			SecSql sql = SecSql.from("UPDATE article");
+			sql = SecSql.from("UPDATE article");
 			sql.append("SET ");
 			sql.append("title = ?,", title);
 			sql.append("`body` = ?", body);

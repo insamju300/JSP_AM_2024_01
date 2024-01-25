@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 import com.KoreaIT.java.Jsp_AM.config.Config;
 import com.KoreaIT.java.Jsp_AM.exception.SQLErrorException;
@@ -37,8 +38,23 @@ public class ArticleDeleteServlet extends HttpServlet {
 			response.getWriter().append("연결 성공!");
 
 			int id = Integer.parseInt(request.getParameter("id"));
+			//서버쪽 삭제 권한 체크
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?;", id);
 
-			SecSql sql = SecSql.from("DELETE");
+			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+			
+			if(Integer.parseInt(articleRow.get("memberId").toString())!=loginMember.getId()) {
+				
+				response.getWriter()
+				.append("<script>alert('회원님은 이 게시글의 삭제 권한이 없습니다.'); location.replace('list');</script>");
+				return;
+			};
+            //서버쪽 삭제 권한 체크 끝
+			
+			sql = SecSql.from("DELETE");
 			sql.append("FROM article");
 			sql.append("WHERE i = ?;", id);
 
