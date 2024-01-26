@@ -6,6 +6,7 @@ import com.KoreaIT.java.Jsp_AM.service.ArticleService;
 
 import jakarta.servlet.http.HttpSession;
 
+//@WebServlet("/article/doDelete")
 public class ArticleDoDeleteController  implements Controller{
 
 	private ArticleService service = new ArticleService();

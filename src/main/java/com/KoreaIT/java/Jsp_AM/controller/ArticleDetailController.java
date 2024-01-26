@@ -4,9 +4,10 @@ import java.util.Map;
 import com.KoreaIT.java.Jsp_AM.dto.Article;
 import com.KoreaIT.java.Jsp_AM.service.ArticleService;
 
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpSession;
 
-
+//@WebServlet("/article/detail")
 public class ArticleDetailController implements Controller{
 	ArticleService service = new ArticleService();
 	
