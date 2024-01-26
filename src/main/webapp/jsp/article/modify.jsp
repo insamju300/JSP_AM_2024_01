@@ -1,9 +1,10 @@
+<%@ page import="com.KoreaIT.java.Jsp_AM.dto.Article"%>
 <%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
+Article article = (Article) request.getAttribute("article");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,22 +16,22 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 
 	<h2>게시물 수정</h2>
 
-	<h3><%=articleRow.get("id")%>번 게시물 수정
+	<h3><%=article.getId()%>번 게시물 수정
 	</h3>
 
 	<div>
 		날짜 :
-		<%=articleRow.get("regDate")%></div>
+		<%=article.getStringRegDate()%></div>
 		
 	<form method="POST" action="doModify">
-		<input type="hidden" value="<%=articleRow.get("id")%>" name="id" />
+		<input type="hidden" value="<%=article.getId()%>" name="id" />
 		<div>
 			제목 : <input type="text" name="title"
-				value="<%=articleRow.get("title")%>"/ >
+				value="<%=article.getTitle()%>"/ >
 		</div>
 		<div>
 			내용 :
-			<textarea type="text" name="body"><%=articleRow.get("body")%></textarea>
+			<textarea type="text" name="body"><%=article.getBody()%></textarea>
 		</div>
 		<button type="submit">수정</button>
 	</form>

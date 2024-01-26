@@ -1,4 +1,5 @@
-<%@ page import="com.KoreaIT.java.Jsp_AM.servlet.Member"%>
+<%@ page import="com.KoreaIT.java.Jsp_AM.dto.Article"%>
+<%@ page import="com.KoreaIT.java.Jsp_AM.dto.Member"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.lang.Math"%>
@@ -6,7 +7,7 @@
 	pageEncoding="UTF-8"%>
 
 <%
-List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
+List<Article> articles = (List<Article>) request.getAttribute("articles");
 int cPage = (int) request.getAttribute("page");
 int totalPage = (int) request.getAttribute("totalPage");
 int totalCnt = (int) request.getAttribute("totalCnt");
@@ -87,24 +88,24 @@ body {
 		</thead>
 		<tbody>
 			<%
-			for (Map<String, Object> articleRow : articleRows) {
+			for (Article article : articles) {
 			%>
 			<tr style="text-align: center;">
-				<td><%=articleRow.get("id")%></td>
-				<td><%=articleRow.get("regDate")%></td>
-				<td><a href="detail?id=<%=articleRow.get("id")%>"><%=articleRow.get("title")%></a></td>
-				<td><%=articleRow.get("writer")%></td>
+				<td><%=article.getId()%></td>
+				<td><%=article.getStringRegDate()%></td>
+				<td><a href="detail?id=<%=article.getId()%>"><%=article.getTitle()%></a></td>
+				<td><%=article.getWriter()%></td>
 				<td>
 					<%
-					if (loginMember != null && loginMember.getId() == Integer.parseInt(articleRow.get("memberId").toString())) {
+					if (loginMember != null && loginMember.getId() == article.getMemberId()) {
 					%>
-					<a href="modify?id=<%=articleRow.get("id")%>">수정</a> <%}%>
+					<a href="modify?id=<%=article.getId()%>">수정</a> <%}%>
 				</td>
 				<td>
 					<%
-					if (loginMember != null && loginMember.getId() == Integer.parseInt(articleRow.get("memberId").toString())) {
+					if (loginMember != null && loginMember.getId() == article.getMemberId()) {
 					%>
-					<a href="doDelete?id=<%=articleRow.get("id")%>">del</a> <%}%>
+					<a href="doDelete?id=<%=article.getId()%>">del</a> <%}%>
 
 
 				</td>

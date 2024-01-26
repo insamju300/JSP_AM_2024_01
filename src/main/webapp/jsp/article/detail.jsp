@@ -1,10 +1,11 @@
-<%@ page import="com.KoreaIT.java.Jsp_AM.servlet.Member"%>
+<%@ page import="com.KoreaIT.java.Jsp_AM.dto.Article"%>
+<%@ page import="com.KoreaIT.java.Jsp_AM.dto.Member"%>
 <%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
+Article article = (Article) request.getAttribute("article");
 Member loginMember = (Member) request.getSession().getAttribute("loginMember");
 %>
 <!DOCTYPE html>
@@ -19,31 +20,30 @@ Member loginMember = (Member) request.getSession().getAttribute("loginMember");
 
 	<div>
 		번호 :
-		<%=articleRow.get("id")%></div>
+		<%=article.getId()%></div>
 	<div>
 		작성자 :
-		<%=articleRow.get("writer")%></div>
+		<%=article.getWriter()%></div>
 	<div>
 		날짜 :
-		<%=articleRow.get("regDate")%></div>
+		<%=article.getStringRegDate()%></div>
 	<div>
 		제목 :
-		<%=articleRow.get("title")%></div>
+		<%=article.getTitle()%></div>
 	<div>
 		내용 :
-		<%=articleRow.get("body")%></div>
+		<%=article.getBody()%></div>
 
 
 	<div>
 		<%
-		if (loginMember != null && loginMember.getId() == Integer.parseInt(articleRow.get("memberId").toString())) {
-		%>
-		<a href="modify?id=<%=articleRow.get("id")%>">수정</a>
+		if (loginMember != null && loginMember.getId() == article.getMemberId()) {%>
+		<a href="modify?id=<%=article.getId()%>">수정</a>
 		<%}%>
 		<%
-		if (loginMember != null && loginMember.getId() == Integer.parseInt(articleRow.get("memberId").toString())) {
+		if (loginMember != null && loginMember.getId() == article.getMemberId()) {
 		%>
-		<a href="doDelete?id=<%=articleRow.get("id")%>">del</a>
+		<a href="doDelete?id=<%=article.getId()%>">del</a>
 		<%}%>
 	</div>
 	<div>

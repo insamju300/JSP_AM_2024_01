@@ -113,6 +113,16 @@ public class ArticleDAO {
 		return id;
 		
 	}
+
+	public int getTotalCnt() {
+		connectConnection();
+		SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
+		sql.append("FROM article");
+
+		int totalCnt = DBUtil.selectRowIntValue(conn, sql);
+		closeConnection();
+		return totalCnt;
+	}
 	
 	
 

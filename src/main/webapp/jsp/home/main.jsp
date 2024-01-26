@@ -1,4 +1,4 @@
-<%@ page import="com.KoreaIT.java.Jsp_AM.servlet.Member"%>
+<%@ page import="com.KoreaIT.java.Jsp_AM.dto.Member"%>
 <%@ page import="jakarta.servlet.http.HttpSession"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
