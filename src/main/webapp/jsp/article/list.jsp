@@ -190,9 +190,9 @@ body {
 			<a class="<%=cPage == i ? "cPage" : ""%>" href="list?page=<%=i%>"><%=i%></a>
 			<%
 			}
-			int afterBtn = cPage + pageSize_v2;
+			int afterBtn = pageGroup  + pageSize_v2;
 			if (afterBtn > totalPage) {
-			afterBtn = totalPage;
+			//afterBtn = totalPage;
 			}
 			%>
 			<a href="list?page=<%=afterBtn%>">▷</a>

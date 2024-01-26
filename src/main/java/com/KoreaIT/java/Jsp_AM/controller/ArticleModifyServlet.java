@@ -1,9 +1,10 @@
-package com.KoreaIT.java.Jsp_AM.servlet;
+package com.KoreaIT.java.Jsp_AM.controller;
 
 import java.io.IOException;
 import java.util.Optional;
 
 import com.KoreaIT.java.Jsp_AM.dto.Article;
+import com.KoreaIT.java.Jsp_AM.dto.Member;
 import com.KoreaIT.java.Jsp_AM.service.ArticleService;
 
 import jakarta.servlet.ServletException;
@@ -12,17 +13,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/detail")
-public class ArticleDetailServlet extends HttpServlet {
+@WebServlet("/article/modify")
+public class ArticleModifyServlet extends HttpServlet {
+	
 	ArticleService service = new ArticleService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+        
 		int id = Integer.parseInt(request.getParameter("id"));
-		Article findArticle = service.findArticleById(id).get(); //바로 get해주는 이유. null인경우는 filter에서 걸러버림.
-		request.setAttribute("article", findArticle);
-		request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
+		Article article = service.findArticleById(id).get();
+		request.setAttribute("article", article);
+		request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 		
 		// DB연결
 //		try {
@@ -33,21 +36,29 @@ public class ArticleDetailServlet extends HttpServlet {
 //		}
 //
 //		Connection conn = null;
-
+//
 //		try {
 //			conn = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPw());
-//			//response.getWriter().append("연결 성공!");
 //
 //			int id = Integer.parseInt(request.getParameter("id"));
 //
-//			SecSql sql = SecSql.from("SELECT article.*, `member`.`name` as writer");
-//			sql.append("FROM article INNER JOIN `member` ON article.memberId = `member`.id");
-//			sql.append("WHERE article.id = ?;", id);
+//			SecSql sql = SecSql.from("SELECT *");
+//			sql.append("FROM article");
+//			sql.append("WHERE id = ?;", id); 
 //
 //			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+//			Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+//			
+//			
+//			if(Integer.parseInt(articleRow.get("memberId").toString())!=loginMember.getId()) {
+//				conn.close();
+//				response.getWriter()
+//				.append("<script>alert('회원님인 이 게시글의 수정 권한이 없습니다.'); location.replace('list');</script>");
+//				return;
+//			};
 //
 //			request.setAttribute("articleRow", articleRow);
-//			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
+//			request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 //
 //		} catch (SQLException e) {
 //			System.out.println("에러 : " + e);
@@ -68,4 +79,5 @@ public class ArticleDetailServlet extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
+
 }
