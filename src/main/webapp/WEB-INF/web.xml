@@ -137,4 +137,14 @@
     <filter-name>MemberFilter</filter-name>
     <url-pattern>/MemberFilter</url-pattern>
   </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DispatcherServlet</display-name>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>com.KoreaIT.java.Jsp_AM.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>/DispatcherServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

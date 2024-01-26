@@ -20,9 +20,8 @@ public class ArticleDetailServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		int id = Integer.parseInt(request.getParameter("id"));
-		Optional<Article> findArticle = service.findArticleById(id);
-		//todo: findArticle이 null인경우 고려 해야할까?
-		request.setAttribute("article", findArticle.get());
+		Article findArticle = service.findArticleById(id).get(); //바로 get해주는 이유. null인경우는 filter에서 걸러버림.
+		request.setAttribute("article", findArticle);
 		request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 		
 		// DB연결

@@ -64,8 +64,8 @@ public class ArticleDAO {
 		sql.append("WHERE article.id = ?;", id);
 
 		Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
-		if (articleRow == null) {
-			return null;
+		if (articleRow.isEmpty()) {
+			return Optional.empty();
 		}
 
 		closeConnection();

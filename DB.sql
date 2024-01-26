@@ -64,3 +64,9 @@ ORDER BY id DESC;
 SELECT *
 FROM `member`
 ORDER BY id DESC;
+
+
+INSERT INTO article(regDate, memberId, title, `body`) VALUES (NOW(), CEIL(RAND()*4), CONCAT('제목', RAND()), CONCAT('내용',RAND()))
+
+INSERT INTO article(regDate, memberId, title, `body`)
+SELECT NOW(), CEIL(RAND()*4), CONCAT('제목', RAND()), CONCAT('내용',RAND()) FROM article;

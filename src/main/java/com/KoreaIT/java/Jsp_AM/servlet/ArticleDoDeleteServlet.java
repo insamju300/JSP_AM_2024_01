@@ -22,18 +22,6 @@ public class ArticleDoDeleteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		int id = Integer.parseInt(request.getParameter("id"));
-		Optional<Article> articleOpt = service.findArticleById(id);
-		if (articleOpt.isEmpty()) {
-			response.getWriter().append("<script>alert('존재하지 않는 게시글 입니다.'); location.replace('list');</script>");
-			return;
-		}
-		Article article = articleOpt.get();
-		Member loginMember = (Member) request.getSession().getAttribute("loginMember");
-		if (article.getMemberId() != loginMember.getId()) {
-			response.getWriter()
-					.append("<script>alert('회원님은 이 게시글의 삭제 권한이 없습니다.'); location.replace('list');</script>");
-			return;
-		}
 		service.delete(id);
 		response.getWriter()
 				.append(String.format("<script>alert('%d번 글이 삭제되었습니다.'); location.replace('list');</script>", id));

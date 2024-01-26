@@ -22,19 +22,7 @@ public class ArticleDoModifyServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 
 		int id = Integer.parseInt(request.getParameter("id"));
-		Optional<Article> articleOpt = service.findArticleById(id);
-		if (articleOpt.isEmpty()) {
-			response.getWriter().append("<script>alert('존재하지 않는 게시글 입니다.'); location.replace('list');</script>");
-			return;
-		}
-		Article article = articleOpt.get();
-		Member loginMember = (Member) request.getSession().getAttribute("loginMember");
-		if (article.getMemberId() != loginMember.getId()) {
-			response.getWriter()
-					.append("<script>alert('회원님은 이 게시글의 수정 권한이 없습니다.'); location.replace('list');</script>");
-			return;
-		}
-		
+		Article article = service.findArticleById(id).get();
 		
 		String title = request.getParameter("title");
 		String body = request.getParameter("body");
