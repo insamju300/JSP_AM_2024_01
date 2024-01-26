@@ -1,11 +1,14 @@
 package com.KoreaIT.java.Jsp_AM.servlet;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Servlet implementation class DispatcherServlet
@@ -32,17 +35,25 @@ public class DispatcherServlet extends HttpServlet {
 
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
-
-		response.getWriter().append("<h1>" + request.getRequestURL() + "<h1>");
-		request.getParameterNames().asIterator().forEachRemaining(a -> {
 		
-		try {
-				response.getWriter().append("<h1>" + a + ": " + request.getParameter(a) + "<h1>");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		Map<String, String> paramMap = new HashMap<>();
+		Map<String, Object> responseParamMap = new HashMap<>();
+		
+		//"/JSP_AM_2024_01/article/list"
+
+		response.getWriter().append("<h1>" + request.getRequestURI() + "<h1>");
+		
+		//리퀘스트
+		request.getParameterNames().asIterator().forEachRemaining(a -> {
+		    paramMap.put(a, request.getParameter(a));
 		});
+		
+		//리스폰스
+		responseParamMap.entrySet().forEach(a->request.setAttribute(a.getKey(), a.getValue()));
+		
+		//forward 처리
+		
+		//js처리
 
 	}
 
