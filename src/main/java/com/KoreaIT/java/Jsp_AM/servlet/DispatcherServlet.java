@@ -31,7 +31,6 @@ public class DispatcherServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		response.getWriter().write("작성중");
-		
 	}
 
 	/**

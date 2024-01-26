@@ -1,4 +1,4 @@
-package com.KoreaIT.java.Jsp_AM.servlet;
+package com.KoreaIT.java.Jsp_AM.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
